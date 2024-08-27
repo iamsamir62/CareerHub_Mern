@@ -1,8 +1,10 @@
 import Header from "@/components/Header";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 const AppLayout = () => {
+  const location = useLocation();
+  const isLoginSignupPage = location.pathname === "/auth";
   return (
     <div>
       <div className="grid-background"></div>
@@ -10,10 +12,12 @@ const AppLayout = () => {
         <Header />
         <Outlet />
       </main>
-      <div className="p-10 text-center bg-gray-800 mt-10">
-        {" "}
-        Made by Samir kc❤️
-      </div>
+      {!isLoginSignupPage && (
+        <div className="p-10 text-center bg-gray-800 mt-10">
+          {" "}
+          Made by Samir kc❤️
+        </div>
+      )}
     </div>
   );
 };
