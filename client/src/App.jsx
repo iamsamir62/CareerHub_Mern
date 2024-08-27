@@ -6,6 +6,7 @@ import JobListing from "./pages/jobListing";
 import MyJobs from "./pages/myJobs";
 import PostJobs from "./pages/postJobs";
 import { ThemeProvider } from "./components/theme-provider";
+import LoginSignup from "./pages/LoginSignup";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/my-Jobs",
         element: <MyJobs />,
+      },
+      {
+        path: "/auth",
+        element: <LoginSignup />,
       },
     ],
   },
