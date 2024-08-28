@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import Job from "./pages/job";
 import JobListing from "./pages/jobListing";
 import MyJobs from "./pages/myJobs";
+import Onbording from "./pages/onbording";
 import PostJobs from "./pages/postJobs";
 import { ThemeProvider } from "./components/theme-provider";
 import LoginSignup from "./pages/LoginSignup";
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/onboarding",
+        element: <Onbording />,
       },
       {
         path: "/jobs",

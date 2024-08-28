@@ -32,7 +32,7 @@ const HomePage = () => {
         <h1 className="flex flex-col items-center justify-center gradient-title text-4xl font-extrabold sm:text-6xl lg:text-8xl tracking-tighter py-4">
           Find Your Dream Job{" "}
           <span className="flex items-center gap-2 sm:gap-6 ">
-            and get
+            at
             <img
               src="/logo-white.png"
               alt="CareerHub Logo"
