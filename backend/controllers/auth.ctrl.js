@@ -8,15 +8,12 @@ const registerUser = async (req, res) => {
   try {
     const { fullname, email, contact, password, role } = req.body;
 
-    // Check if all required fields are present
     if (!fullname || !email || !contact || !password || !role) {
       return res.status(400).json({
         message: "Some fields are missing while registration",
         success: false
       });
     }
-
-    // Check if the user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({
@@ -25,7 +22,6 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // Create a new user
     const user = await User.create({
       fullname,
       email,
@@ -34,11 +30,12 @@ const registerUser = async (req, res) => {
       role,
     });
 
-    // Respond with success
+
     if (user) {
       return res.status(201).json({
         success: true,
-        message: 'User created successfully!'
+        message: 'User created successfully!',
+        data: user
       });
     } else {
       return res.status(400).json({
@@ -59,8 +56,6 @@ const registerUser = async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   try {
     const { email, password, role } = req.body;
-
-    // Check if any required fields are missing
     if (!email || !password || !role) {
       return res.status(400).json({
         message: "Some fields are missing while registration",
@@ -68,7 +63,6 @@ const loginUser = asyncHandler(async (req, res) => {
       });
     }
 
-    // Find user by email
     let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
@@ -82,7 +76,6 @@ const loginUser = asyncHandler(async (req, res) => {
         success: false,
       });
     }
-
     // Compare provided password with stored password
     const isPasswordMatch = await user.comparePassword(password);
     if (isPasswordMatch) {
@@ -121,22 +114,15 @@ const logoutUser = asyncHandler(async (req, res) => {
       message: "An error occurred while logging out.",
       success: false
     });
-
-
   }
-
-
 })
 
 const updateProfile = asyncHandler(async (req, res) => {
   try {
     const { fullname, email, contact, bio, skills } = req.body;
     const file = req.file;
-
-
     console.log("Request Body:", req.body);
     console.log("Uploaded File:", file);
-
 
     let skillsArray;
     if (typeof skills === 'string') {
@@ -147,11 +133,8 @@ const updateProfile = asyncHandler(async (req, res) => {
       skillsArray = [];
     }
 
-
     const userId = req.id;
     console.log("User ID:", userId);
-
-
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       {
@@ -170,16 +153,12 @@ const updateProfile = asyncHandler(async (req, res) => {
         success: false
       });
     }
-
-
     return res.status(200).json({
       message: "Profile updated successfully",
       success: true,
       data: updatedUser
     });
-
   } catch (error) {
-
     console.error("Update Error:", error);
     return res.status(500).json({
       message: "An error occurred while updating the profile",
@@ -187,11 +166,6 @@ const updateProfile = asyncHandler(async (req, res) => {
     });
   }
 });
-
-
-
-
-
 
 
 

@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./utils/db.js";
 import userRoute from "./routes/user.route.js"
+import companyRoute from "./routes/company.routes.js"
 
 // Load environment variables from .env file
 dotenv.config();
@@ -30,6 +31,7 @@ const PORT = process.env.PORT || 3000;
 
 //api's
 app.use("/api/auth", userRoute)
+app.use("/api/company", companyRoute)
 
 // Start the server
 app.listen(PORT, () => {

@@ -20,11 +20,12 @@ const companySchema = new mongoose.Schema({
     type: String,
   },
   userId: {
-    tyoe: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 },
   { timestamps: true })
 
-export const Company = mongoose.model(Company, companySchema)
+const Company = mongoose.model("Company", companySchema)
+export default Company;
