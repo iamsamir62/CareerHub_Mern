@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import connectDB from "./utils/db.js";
 import userRoute from "./routes/user.route.js"
 import companyRoute from "./routes/company.routes.js"
+import jobRoute from "./routes/jobs.route.js"
 
 // Load environment variables from .env file
 dotenv.config();
@@ -23,7 +24,7 @@ const corsOptions = {
   origin: 'http://localhost:5173',
   credentials: true
 };
-
+connectDB();
 // CORS middleware
 app.use(cors(corsOptions));
 
@@ -32,9 +33,10 @@ const PORT = process.env.PORT || 3000;
 //api's
 app.use("/api/auth", userRoute)
 app.use("/api/company", companyRoute)
+app.use("/api/jobs", jobRoute)
 
 // Start the server
 app.listen(PORT, () => {
-  connectDB();
+
   console.log(`server running at port ${PORT}`);
 });
