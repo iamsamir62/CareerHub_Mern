@@ -108,6 +108,22 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
+  try {
+    return res.status(200).cookie("token", "", { maxAge: 0, httpOnly: true, sameSite: "strict" }).json({
+      message: "Logged out Successfully.",
+      success: true
+    })
+
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({
+      message: "An error occurred while logging out.",
+      success: false
+    });
+
+
+  }
 
 
 })
@@ -171,6 +187,8 @@ const updateProfile = asyncHandler(async (req, res) => {
     });
   }
 });
+
+
 
 
 
