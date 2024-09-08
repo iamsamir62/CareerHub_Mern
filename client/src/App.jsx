@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 import HomePage from "./pages/HomePage";
 import Job from "./pages/job";
+import Profile from "./components/profile";
 import JobListing from "./pages/jobListing";
 import MyJobs from "./pages/myJobs";
 import Onbording from "./pages/onbording";
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
         path: "/onboarding",
         element: <Onbording />,
       },
@@ -26,7 +31,7 @@ const router = createBrowserRouter([
         element: <JobListing />,
       },
       {
-        path: "/job/:id",
+        path: "/description/:id",
         element: <Job />,
       },
       {

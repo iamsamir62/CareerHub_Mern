@@ -24,8 +24,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useSelector } from "react-redux";
+import store from "@/redux/store";
+import Profile from "../components/profile";
 
 const HomePage = () => {
+  const { user } = useSelector((store) => store.auth);
+  console.log(user.role);
+
   return (
     <main className="flex flex-col gap-10 sm:gap-20 py-10 sm:py-20">
       <section className="text-center">
@@ -33,29 +39,44 @@ const HomePage = () => {
           Find Your Dream Job{" "}
           <span className="flex items-center gap-2 sm:gap-6 ">
             at
-            <img
-              src="/logo-white.png"
-              alt="CareerHub Logo"
-              className="h-14 sm:h-24 lg:h-32"
-            />
+            <h1 className="font-bold mt-2 text-6xl sm:text-6xl lg:text-8xl">
+              Career<span className="text-red-700 font-mono">Hub</span>
+            </h1>
           </span>
         </h1>
         <p className="text-gray-300 sm:mt-4 text-xs sm:text-xl">
           Explore thousands of job listings or find the perfect candidate
         </p>
       </section>
-      <div className="flex gap-6 justify-center ">
-        <Link to={"/jobs"}>
-          <Button variant="blue" size="xl">
-            Find Jobs
-          </Button>
-        </Link>
-        <Link to={"/post-job"}>
-          <Button variant="destructive" size="xl">
-            Post a Job
-          </Button>
-        </Link>
-      </div>
+      {user?.role === "recruiter" ? (
+        <div className="flex gap-6 justify-center">
+          <Link to="/post-job">
+            <Button variant="destructive" size="xl">
+              Post a Job
+            </Button>
+          </Link>
+          <Link to="/jobs">
+            <Button variant="blue" size="xl">
+              Your Jobs
+            </Button>
+          </Link>
+        </div>
+      ) : (
+        <div className="flex gap-6 justify-center">
+          <Link to="/jobs">
+            <Button variant="blue" size="xl">
+              Find Jobs
+            </Button>
+          </Link>
+          <Link to="/post-job">
+            <Button variant="destructive" size="xl">
+              Browse a Job
+            </Button>
+          </Link>
+        </div>
+      )}
+      <Profile />
+
       {/* Carousel */}
       <Carousel
         plugins={[

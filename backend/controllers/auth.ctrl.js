@@ -11,14 +11,22 @@ const registerUser = async (req, res) => {
     if (!fullname || !email || !contact || !password || !role) {
       return res.status(400).json({
         message: "Some fields are missing while registration",
-        success: false
+        success: false,
       });
     }
+
+    const file = req.file;
+    let imageUrl = null;
+
+    if (file) {
+      imageUrl = `/uploads/${file.filename}`; // Set the image URL to the path where the image is stored
+    }
+
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({
         success: false,
-        message: "User already exists for the given email!"
+        message: "User already exists for the given email!",
       });
     }
 
@@ -28,29 +36,32 @@ const registerUser = async (req, res) => {
       contact,
       password,
       role,
+      image: imageUrl, // Save the image URL in the user's record
     });
 
-
     if (user) {
+      console.log("user created:", user);
+
       return res.status(201).json({
         success: true,
         message: 'User created successfully!',
-        data: user
+        data: user,
       });
     } else {
       return res.status(400).json({
         success: false,
-        message: 'Error while creating the user'
+        message: 'Error while creating the user',
       });
     }
   } catch (error) {
     console.error('Error creating user:', error);
     return res.status(500).json({
       success: false,
-      message: 'Internal server error while creating the user'
+      message: 'Internal server error while creating the user',
     });
   }
 };
+
 
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -58,7 +69,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const { email, password, role } = req.body;
     if (!email || !password || !role) {
       return res.status(400).json({
-        message: "Some fields are missing while registration",
+        message: "Some fields are missing while login",
         success: false,
       });
     }
@@ -89,7 +100,19 @@ const loginUser = asyncHandler(async (req, res) => {
         profile: user.profile
 
       }
-      return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: "strict" }).json(successResponse('Logged in successfully!', user, { token }));
+      return res
+        .status(200)
+        .cookie("token", token, {
+          maxAge: 1 * 24 * 60 * 60 * 1000,
+          httpOnly: true,
+          sameSite: "strict"
+        })
+        .json({
+          success: true,
+          message: 'Logged in successfully!',
+          data: user
+        });
+
     } else {
       return res.status(400).json(failedResponse('Invalid credentials!'));
     }
