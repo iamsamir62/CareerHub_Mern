@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import bcrypt from 'bcryptjs'
 import { response } from "express";
 import { successResponse, failedResponse } from "../utils/apiResponse.js";
+import getDataUri from "../utils/datauri.js";
+import cloudinary from "../utils/cloudinary.js";
 const registerUser = async (req, res) => {
   try {
     const { fullname, email, contact, password, role } = req.body;
@@ -13,14 +15,13 @@ const registerUser = async (req, res) => {
         message: "Some fields are missing while registration",
         success: false,
       });
-    }
+    };
 
     const file = req.file;
-    let imageUrl = null;
+    const fileuri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileuri.content);
 
-    if (file) {
-      imageUrl = `/uploads/${file.filename}`; // Set the image URL to the path where the image is stored
-    }
+
 
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -36,8 +37,12 @@ const registerUser = async (req, res) => {
       contact,
       password,
       role,
-      image: imageUrl, // Save the image URL in the user's record
+      profile: {
+        profilePhoto: cloudResponse.secure_url
+      }
     });
+    console.log(user?.profile?.profilePhoto);
+
 
     if (user) {
       console.log("user created:", user);
@@ -143,9 +148,18 @@ const logoutUser = asyncHandler(async (req, res) => {
 const updateProfile = asyncHandler(async (req, res) => {
   try {
     const { fullname, email, contact, bio, skills } = req.body;
+    console.log(fullname, email, contact, bio, skills);
+
     const file = req.file;
-    console.log("Request Body:", req.body);
-    console.log("Uploaded File:", file);
+
+    let fileURI = null;
+    let originalFileName = null;
+    if (file) {
+      originalFileName = file.originalname;
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      fileURI = cloudResponse.secure_url; // Get the URL of the uploaded file
+    }
 
     let skillsArray;
     if (typeof skills === 'string') {
@@ -165,7 +179,11 @@ const updateProfile = asyncHandler(async (req, res) => {
         email,
         contact,
         'profile.bio': bio,
-        'profile.skills': skillsArray
+        'profile.skills': skillsArray,
+        'profile.resume': {
+          url: fileURI,
+          originalName: originalFileName
+        } // Ensure fileURI is used here
       },
       { new: true, runValidators: true }
     );
@@ -189,6 +207,9 @@ const updateProfile = asyncHandler(async (req, res) => {
     });
   }
 });
+
+
+
 
 
 

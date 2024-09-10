@@ -27,11 +27,10 @@ import {
 import { useSelector } from "react-redux";
 import store from "@/redux/store";
 import Profile from "../components/profile";
+import useGetAllJobs from "@/hooks/useGetAllJobs";
 
 const HomePage = () => {
   const { user } = useSelector((store) => store.auth);
-  console.log(user.role);
-
   return (
     <main className="flex flex-col gap-10 sm:gap-20 py-10 sm:py-20">
       <section className="text-center">
@@ -48,7 +47,7 @@ const HomePage = () => {
           Explore thousands of job listings or find the perfect candidate
         </p>
       </section>
-      {user?.role === "recruiter" ? (
+      {user?.role === "candidate" ? (
         <div className="flex gap-6 justify-center">
           <Link to="/post-job">
             <Button variant="destructive" size="xl">
@@ -75,7 +74,6 @@ const HomePage = () => {
           </Link>
         </div>
       )}
-      <Profile />
 
       {/* Carousel */}
       <Carousel

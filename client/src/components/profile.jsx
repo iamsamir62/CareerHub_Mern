@@ -6,12 +6,13 @@ import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import AppliedJob from "./AppliedJob";
 import UpdateProfileDialog from "./UpdateProfileDialog";
+import { useSelector } from "react-redux";
 
-const skills = ["React", "Python", "Nextjs", "Nodejs"];
-const isHaveResume = true;
+const isResume = true;
 
 const profile = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useSelector((store) => store.auth);
   return (
     <>
       <div className=" items-center max-w-4xl mx-auto border border-gray-200 rounded-2xl my-5 p-8">
@@ -24,8 +25,10 @@ const profile = () => {
               />
             </Avatar>
             <div>
-              <h1 className="text-white font-medium text-xl">Full Name</h1>
-              <p>Add your bio here!</p>
+              <h1 className="text-white font-medium text-xl">
+                {user?.fullname}{" "}
+              </h1>
+              <p>{user?.profile?.bio}</p>
             </div>
           </div>
 
@@ -41,17 +44,19 @@ const profile = () => {
         <div className="mx-5">
           <div className="  flex items-center gap-3">
             <Mail />
-            <span>kcsamir1961@gmail.com</span>
+            <span>{user?.email}</span>
           </div>
           <div className="  mt-3 flex items-center gap-3">
             <Contact />
-            <span>9861683637</span>
+            <span>{user?.contact}</span>
           </div>
-          <div className=" my-3  text-white">
+          <div className=" my-4  text-white">
             <h1>Skills</h1>
             <div className="flex gap-4 my-1">
-              {skills.length > 0 ? (
-                skills.map((item, index) => <Badge key={index}>{item}</Badge>)
+              {user?.profile?.skills.length > 0 ? (
+                user?.profile?.skills.map((item, index) => (
+                  <Badge key={index}>{item}</Badge>
+                ))
               ) : (
                 <span>Na</span>
               )}
@@ -59,13 +64,13 @@ const profile = () => {
           </div>
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label className="text-md font-bold">Resume</Label>
-            {isHaveResume ? (
+            {isResume ? (
               <a
                 target="blank"
-                href="https://youtube.com/@patemmernstack"
+                href={user?.profile?.resume?.url}
                 className="text-blue-500 w-full hover:underline cursor-pointer"
               >
-                Link
+                {user?.profile?.resume.originalName}
               </a>
             ) : (
               <span>NA</span>

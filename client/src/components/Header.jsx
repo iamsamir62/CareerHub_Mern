@@ -47,20 +47,28 @@ const Header = () => {
             <Popover>
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
-                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarImage
+                    src={user?.profile?.profilePhoto}
+                    alt="Profile Image"
+                  />
+
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </PopoverTrigger>
               <PopoverContent className="w-64">
                 <div className="flex items-center gap-4 mb-4">
                   <Avatar className="cursor-pointer">
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarImage
+                      src={user?.profile?.profilePhoto}
+                      alt="Profile Image"
+                    />
+
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                   <div>
-                    <h4 className="font-medium text-lg">Samir kc </h4>
-                    <p className="text-sm text-muted-foreground">
-                      Lorem ipsum dolor sit amet.
+                    <h4 className="font-medium text-lg">{user?.fullname} </h4>
+                    <p className="text-sm text-white text-muted-foreground">
+                      {user?.profile?.bio || "No bio available"}
                     </p>
                   </div>
                 </div>

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import bcrypt from 'bcryptjs'
-import jwt from "jsonwebtoken"
+import bcrypt from 'bcryptjs';
+import jwt from "jsonwebtoken";
+
 const userSchema = new mongoose.Schema({
   fullname: {
     type: String,
@@ -27,20 +28,19 @@ const userSchema = new mongoose.Schema({
   profile: {
     bio: { type: String },
     skills: [{ type: String }],
-    resume: { type: String }, //url to resume file
-    resumeOriginalName: { type: String },
-    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
+    resume: {
+      url: { type: String },           // Resume URL
+      originalName: { type: String },
+      company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
+    },
     profilePhoto: {
       type: String,
-      default: ""
-    }
-
+      default: "",
+    },
   },
+}, { timestamps: true });
 
-},
-  { timestamps: true });
-
-
+// Hash password before saving user
 userSchema.pre('save', async function (next) {
   if (!this.isModified("password")) {
     next();
