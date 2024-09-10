@@ -68,13 +68,15 @@ const CompanySetup = () => {
   };
 
   useEffect(() => {
-    setInput({
-      name: singleCompany.name || "",
-      description: singleCompany.description || "",
-      website: singleCompany.website || "",
-      location: singleCompany.location || "",
-      file: singleCompany.file || null,
-    });
+    if (singleCompany) {
+      setInput({
+        name: singleCompany.name || "",
+        description: singleCompany.description || "",
+        website: singleCompany.website || "",
+        location: singleCompany.location || "",
+        file: singleCompany.logo || null,
+      });
+    }
   }, [singleCompany]);
 
   return (
@@ -83,7 +85,7 @@ const CompanySetup = () => {
         <form onSubmit={submitHandler}>
           <div className="flex items-center gap-5 p-8">
             <Button
-              onClick={() => navigate("/admin/companies")}
+              onClick={() => navigate("/admin")}
               variant="outline"
               className="flex items-center gap-2 text-gray-500 font-semibold"
             >

@@ -1,9 +1,12 @@
 import { setSingleCompany } from "@/redux/companySlice";
+import { COMPANY_API_END_POINT } from "@/utils/constant";
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 const useGetCompanyById = (companyId) => {
   const dispatch = useDispatch();
+  console.log(companyId);
 
   useEffect(() => {
     const fetchSingleCompany = async () => {
@@ -19,6 +22,7 @@ const useGetCompanyById = (companyId) => {
         console.log(error);
       }
     };
+    fetchSingleCompany();
   }, [companyId, dispatch]);
 };
 
