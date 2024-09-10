@@ -1,5 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Company from '../models/company.model.js';
+import getDataUri from "../utils/datauri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 
 const registerCompany = asyncHandler(async (req, res) => {
@@ -24,7 +26,7 @@ const registerCompany = asyncHandler(async (req, res) => {
     });
     return res.status(201).json({
       message: "company registered successfully",
-      data: company,
+      company,
       success: true
     });
   } catch (error) {
@@ -45,7 +47,7 @@ const getAllCompany = asyncHandler(async (req, res) => {
     return res.status(200).json({
       message: "Companies retrieved successfully!",
       success: true,
-      data: companies,
+      companies,
     });
   } catch (error) {
     console.error("Error retrieving companies:", error);
@@ -82,8 +84,12 @@ const updateCompany = asyncHandler(async (req, res) => {
     const companyId = req.params.id;
     const { name, description, website, location } = req.body;
     const file = req.file;
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    const logo = cloudResponse.secure_url;
 
-    const updateData = { name, description, website, location }
+
+    const updateData = { name, description, website, location, logo }
 
 
     const company = await Company.findByIdAndUpdate(

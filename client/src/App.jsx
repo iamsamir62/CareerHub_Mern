@@ -9,6 +9,9 @@ import Onbording from "./pages/onbording";
 import PostJobs from "./pages/postJobs";
 import { ThemeProvider } from "./components/theme-provider";
 import LoginSignup from "./pages/LoginSignup";
+import Companies from "./components/admin/Companies";
+import CreateCompany from "./components/admin/CreateCompany";
+import CompanySetup from "./components/admin/CompanySetup";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +48,18 @@ const router = createBrowserRouter([
       {
         path: "/auth",
         element: <LoginSignup />,
+      },
+      {
+        path: "/admin",
+        element: <Companies />,
+      },
+      {
+        path: "/admin/companies/create",
+        element: <CreateCompany />,
+      },
+      {
+        path: "/admin/companies/:id",
+        element: <CompanySetup />,
       },
     ],
   },

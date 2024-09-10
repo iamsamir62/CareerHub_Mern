@@ -47,7 +47,7 @@ const HomePage = () => {
           Explore thousands of job listings or find the perfect candidate
         </p>
       </section>
-      {user?.role === "candidate" ? (
+      {user?.role === "recruiter" ? (
         <div className="flex gap-6 justify-center">
           <Link to="/post-job">
             <Button variant="destructive" size="xl">

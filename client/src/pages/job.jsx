@@ -50,7 +50,6 @@ const Job = () => {
           withCredentials: true,
         }
       );
-
       if (res.data.success) {
         const updatedSingleJob = {
           ...singlejob,
@@ -66,10 +65,6 @@ const Job = () => {
       toast.error(error.response.data.message);
     }
   };
-
-  if (isLoading) {
-    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
-  }
 
   return (
     <div className="max-w-7xl mx-auto my-10">

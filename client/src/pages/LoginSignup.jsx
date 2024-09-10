@@ -90,7 +90,7 @@ const LoginSignup = () => {
             contact: "",
             role: "candidate",
           });
-          navigate("/auth"); // Navigate to /auth after signup
+          setIsSignUp(false);
         }
       } else {
         // Login request
