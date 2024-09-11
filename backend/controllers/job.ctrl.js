@@ -25,7 +25,7 @@ const postJob = asyncHandler(async (req, res) => {
     });
     return res.status(201).json({
       message: "New job created successfully",
-      data: job,
+      job,
       success: true
     })
   } catch (error) {
@@ -89,7 +89,9 @@ const getJobById = asyncHandler(async (req, res) => {
 const getAdminJobs = asyncHandler(async (req, res) => {
   try {
     const adminId = req.id;
-    const jobs = await Job.find({ created_By: adminId });
+    const jobs = await Job.find({ created_By: adminId }).populate({
+      path: 'company'
+    });
     if (!jobs) {
       return res.status(404).json({
         message: "Jobs not found",
@@ -97,7 +99,7 @@ const getAdminJobs = asyncHandler(async (req, res) => {
       })
     }
     return res.status(200).json({
-      data: jobs,
+      jobs,
       success: true
     })
 

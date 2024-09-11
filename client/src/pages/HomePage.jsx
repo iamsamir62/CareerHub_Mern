@@ -54,7 +54,7 @@ const HomePage = () => {
               Post a Job
             </Button>
           </Link>
-          <Link to="/jobs">
+          <Link to="/admin/jobs">
             <Button variant="blue" size="xl">
               Your Jobs
             </Button>
