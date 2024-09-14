@@ -8,6 +8,11 @@ import { Toaster } from "./components/ui/sonner.jsx";
 import store from "./redux/store.js";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+const customToastStyle = {
+  fontSize: "3rem",
+  padding: "1rem",
+  maxWidth: "400px",
+};
 const persistor = persistStore(store);
 createRoot(document.getElementById("root")).render(
   <StrictMode>

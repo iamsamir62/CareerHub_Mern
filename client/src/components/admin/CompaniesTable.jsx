@@ -25,18 +25,22 @@ const CompaniesTable = () => {
 
   const [filterCompany, setFilterCompany] = useState(companies);
   useEffect(() => {
+    // Check if companies is an array before filtering
     const filteredCompany =
-      companies.length >= 0 &&
-      companies.filter((company) => {
-        if (!searchCompanyByText) {
-          return true;
-        }
-        return company?.name
-          ?.toLowerCase()
-          .includes(searchCompanyByText.toLowerCase());
-      });
+      Array.isArray(companies) && companies.length > 0
+        ? companies.filter((company) => {
+            if (!searchCompanyByText) {
+              return true;
+            }
+            return company?.name
+              ?.toLowerCase()
+              .includes(searchCompanyByText.toLowerCase());
+          })
+        : []; // Return an empty array if companies is not valid
+
     setFilterCompany(filteredCompany);
   }, [companies, searchCompanyByText]);
+
   return (
     <div>
       <Table>

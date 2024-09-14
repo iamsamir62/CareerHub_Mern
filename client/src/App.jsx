@@ -4,7 +4,6 @@ import HomePage from "./pages/HomePage";
 import Job from "./pages/job";
 import Profile from "./components/profile";
 import JobListing from "./pages/jobListing";
-import MyJobs from "./components/admin/myJobs";
 import Onbording from "./pages/onbording";
 import PostJobs from "./pages/postJobs";
 import { ThemeProvider } from "./components/theme-provider";
@@ -15,6 +14,9 @@ import CompanySetup from "./components/admin/CompanySetup";
 import Jobs from "./components/admin/AdminJobs";
 import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from "./components/admin/PostJob";
+import Applications from "./components/admin/Applications";
+import AppliedJob from "./components/AppliedJob";
+import Browse from "./components/Browse";
 
 const router = createBrowserRouter([
   {
@@ -70,8 +72,16 @@ const router = createBrowserRouter([
         element: <PostJob />,
       },
       {
-        path: "/my-Jobs",
-        element: <MyJobs />,
+        path: "/browse",
+        element: <Browse />,
+      },
+      {
+        path: "/appliedjobs",
+        element: <AppliedJob />,
+      },
+      {
+        path: "/admin/jobs/:id/applicants",
+        element: <Applications />,
       },
     ],
   },

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import rootSlice, { logout } from "./rootSlice";
 
 const jobSlice = createSlice({
   name: 'job',
@@ -7,6 +8,8 @@ const jobSlice = createSlice({
     singlejob: null,
     adminjobs: [],
     searchJobByText: "",
+    allAppliedJobs: [],
+    searchedQuery: "",
   },
   reducers: {
     setAllJobs: (state, action) => {
@@ -21,10 +24,31 @@ const jobSlice = createSlice({
     setSearchJobByText: (state, action) => {
       state.searchJobByText = action.payload;
     },
+    setAllAppliedJobs: (state, action) => {
+      state.allAppliedJobs = action.payload;
+    },
+    setSearchedQuery: (state, action) => {
+      state.searchedQuery = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout, (state) => {
+      state.allJobs = [];
+      state.singlejob = null;
+      state.adminjobs = [];
+      state.searchJobByText = "";
+
+    })
+
   }
 
 });
 
-export const { setAllJobs, setSingleJob, setAdminJobs, setSearchJobByText } = jobSlice.actions;
+export const { setAllJobs,
+  setSingleJob,
+  setAdminJobs,
+  setSearchJobByText,
+  setAllAppliedJobs,
+  setSearchedQuery } = jobSlice.actions;
 
 export default jobSlice.reducer

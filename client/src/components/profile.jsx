@@ -7,10 +7,12 @@ import { Label } from "./ui/label";
 import AppliedJob from "./AppliedJob";
 import UpdateProfileDialog from "./UpdateProfileDialog";
 import { useSelector } from "react-redux";
+import useGetAppliedJobs from "@/hooks/useGetAppliedJobs";
 
 const isResume = true;
 
 const profile = () => {
+  useGetAppliedJobs();
   const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
   return (
@@ -78,10 +80,12 @@ const profile = () => {
           </div>
         </div>
       </div>
-      <div className="max-w-4xl mx-auto rounded-2xl">
-        <h1 className="font-bold text-lg my-5">Applied Jobs</h1>
-        <AppliedJob />
-      </div>
+      {user?.role === "candidate" && (
+        <div className="max-w-4xl mx-auto rounded-2xl">
+          <h1 className="font-bold text-lg my-5">Applied Jobs</h1>
+          <AppliedJob />
+        </div>
+      )}
       <UpdateProfileDialog open={open} setOpen={setOpen} />
     </>
   );

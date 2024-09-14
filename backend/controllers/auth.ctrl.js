@@ -147,8 +147,8 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 const updateProfile = asyncHandler(async (req, res) => {
   try {
-    const { fullname, email, contact, bio, skills } = req.body;
-    console.log(fullname, email, contact, bio, skills);
+    const { fullname, email, phoneNumber, bio, skills } = req.body;
+    console.log(fullname, email, phoneNumber, bio, skills);
 
     const file = req.file;
 
@@ -177,7 +177,7 @@ const updateProfile = asyncHandler(async (req, res) => {
       {
         fullname,
         email,
-        contact,
+        contact: phoneNumber,
         'profile.bio': bio,
         'profile.skills': skillsArray,
         'profile.resume': {

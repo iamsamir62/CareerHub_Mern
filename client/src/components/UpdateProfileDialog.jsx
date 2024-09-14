@@ -44,7 +44,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
     formData.append("fullname", input.fullname);
     formData.append("email", input.email);
-    formData.append("phoneNumber", input.contact);
+    formData.append("phoneNumber", input.phoneNumber);
     formData.append("bio", input.bio);
     formData.append("skills", input.skills);
     if (input.file) {
@@ -56,8 +56,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       const res = await axios.post(
         `${USER_API_END_POINT}/update-profile`,
         formData,
+
         {
-          withCredentials: true, // No need to set the content-type explicitly
+          withCredentials: true,
         }
       );
       if (res.data.success) {
@@ -120,9 +121,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 </Label>
                 <input
                   type="text"
-                  name="contact"
-                  id="contact"
-                  value={input.contact}
+                  name="phoneNumber"
+                  id="phoneNumber"
+                  value={input.phoneNumber}
                   onChange={changeEventHandler}
                   className="col-span-3 rounded-lg outline-none py-2 px-2 text-black"
                 />

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useDebugValue, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { LogOut, PenBox, SearchIcon, User2 } from "lucide-react";
 import {
@@ -8,12 +8,34 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import store from "@/redux/store";
 import Profile from "../components/profile";
+import axios from "axios";
+import { toast } from "sonner";
+import { USER_API_END_POINT } from "@/utils/constant";
+import { logout } from "@/redux/rootSlice";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        dispatch(logout());
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <nav className="py-4 px-4 sm:px-6 md:px-8 flex flex-col md:flex-row justify-between items-center">
       <Link to="/" className="flex items-center mb-4 md:mb-0">
@@ -21,18 +43,8 @@ const Header = () => {
           Career<span className="text-red-700 font-mono">Hub</span>
         </h1>
       </Link>
-      <div className="relative w-full md:w-80 mb-4 md:mb-0">
-        <input
-          type="text"
-          name=""
-          id=""
-          placeholder="search here..."
-          className="bg-black w-full h-12 rounded-lg text-white px-10 py-3 outline-none"
-        />
-        <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white" />
-      </div>
 
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center ">
         {user ? (
           <div className="flex items-center space-x-4">
             {user?.role === "recruiter" && (
@@ -40,8 +52,7 @@ const Header = () => {
                 variant="destructive"
                 className="rounded-full hidden md:block"
               >
-                <PenBox size={20} className="mr-2" />
-                Post a Job
+                <Link to={"/admin"}> Companies</Link>
               </Button>
             )}
             <Popover>
@@ -77,7 +88,11 @@ const Header = () => {
                     <User2 className="mr-2" />
                     <Link to="/profile">View Profile</Link>
                   </Button>
-                  <Button variant="destructive" className="text-md w-full">
+                  <Button
+                    onClick={logoutHandler}
+                    variant="destructive"
+                    className="text-md w-full"
+                  >
                     <LogOut className="mr-2" />
                     Logout
                   </Button>

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { logout } from "./rootSlice";
 
 const authSlice = createSlice({
   name: "auth",
@@ -13,7 +14,15 @@ const authSlice = createSlice({
     },
     setUser: (state, action) => {
       state.user = action.payload;
-    }
+    },
+
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout, (state) => {
+      state.loading = false;
+      state.user = null;
+    })
+
   }
 });
 export const { setLoading, setUser } = authSlice.actions;

@@ -1,17 +1,13 @@
 import asyncHandler from "express-async-handler"
 import Application from "../models/application.model.js";
 import { Job } from "../models/job.model.js";
+import User from "../models/User.model.js";
 
 const applyJob = asyncHandler(async (req, res) => {
   try {
     const userId = req.id;
     const jobId = req.params.id;
-    if (!jobId) {
-      return res.status(400).json({
-        message: "Job id is required",
-        success: false
-      })
-    };
+
     //check if the user has alerady applied or not?
     const existingApplication = await Application.findOne({ job: jobId, applicant: userId });
 
@@ -69,7 +65,7 @@ const getAppliedJobs = asyncHandler(async (req, res) => {
     }
 
     return res.status(200).json({
-      data: applications,
+      applications,
       success: true
     });
 
@@ -87,21 +83,33 @@ const getAppliedJobs = asyncHandler(async (req, res) => {
 const getApplicants = asyncHandler(async (req, res) => {
   try {
     const jobId = req.params.id;
+
+    if (!jobId) {
+      return res.status(400).json({
+        message: "Job id is required",
+        success: false
+      })
+    };
+
     const job = await Job.findById(jobId).populate({
       path: 'applications',
       options: { sort: { createdAt: -1 } },
       populate: {
-        path: "applicant"
+        path: 'applicant'
       }
-    })
+    });
+
     if (!job) {
       return res.status(404).json({
         message: "job not found",
         success: false
       })
     };
+    console.log(job);
+
     return res.status(200).json({
-      data: job,
+      message: "Job applied successfully",
+      job,
       success: true
     })
   } catch (error) {

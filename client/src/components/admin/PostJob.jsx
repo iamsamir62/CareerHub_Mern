@@ -39,6 +39,7 @@ const PostJob = () => {
   };
 
   const selectChangeHandler = (value) => {
+    // Find the selected company
     const selectedCompany = companies.find(
       (company) => company.name.toLowerCase() === value
     );
@@ -46,7 +47,7 @@ const PostJob = () => {
   };
 
   const submitHandler = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent form default submission
     try {
       setLoading(true);
       const res = await axios.post(`${JOB_API_END_POINT}/postjob`, input, {
@@ -60,7 +61,7 @@ const PostJob = () => {
         navigate("/admin/jobs");
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -161,14 +162,13 @@ const PostJob = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    {companies.map((company) => (
-                      <SelectItem
-                        key={company._id} // Added key prop
-                        value={company?.name?.toLowerCase()}
-                      >
-                        {company.name}
-                      </SelectItem>
-                    ))}
+                    {companies.map((company) => {
+                      return (
+                        <SelectItem value={company?.name?.toLowerCase()}>
+                          {company.name}
+                        </SelectItem>
+                      );
+                    })}
                   </SelectGroup>
                 </SelectContent>
               </Select>

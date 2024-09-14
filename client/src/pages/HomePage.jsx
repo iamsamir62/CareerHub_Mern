@@ -7,8 +7,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import companies from "../data/companies.json";
 import faqs from "../data/faq.json";
 import {
@@ -28,9 +28,19 @@ import { useSelector } from "react-redux";
 import store from "@/redux/store";
 import Profile from "../components/profile";
 import useGetAllJobs from "@/hooks/useGetAllJobs";
+import { toast } from "sonner";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
+  const handleClick = () => {
+    if (user) {
+      navigate("/appliedjobs");
+    } else {
+      navigate("/auth");
+      toast.error("Plese login first to apply for a job");
+    }
+  };
   return (
     <main className="flex flex-col gap-10 sm:gap-20 py-10 sm:py-20">
       <section className="text-center">
@@ -49,7 +59,7 @@ const HomePage = () => {
       </section>
       {user?.role === "recruiter" ? (
         <div className="flex gap-6 justify-center">
-          <Link to="/post-job">
+          <Link to="/admin/jobs/create">
             <Button variant="destructive" size="xl">
               Post a Job
             </Button>
@@ -67,11 +77,10 @@ const HomePage = () => {
               Find Jobs
             </Button>
           </Link>
-          <Link to="/post-job">
-            <Button variant="destructive" size="xl">
-              Browse a Job
-            </Button>
-          </Link>
+
+          <Button variant="destructive" size="xl" onClick={handleClick}>
+            Applied jobs
+          </Button>
         </div>
       )}
 

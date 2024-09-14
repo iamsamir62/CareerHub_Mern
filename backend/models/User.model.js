@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
+
 // Hash password before saving user
 userSchema.pre('save', async function (next) {
   if (!this.isModified("password")) {
@@ -60,7 +61,7 @@ userSchema.methods.generateToken = function () {
       email: this.email,
     },
     process.env.JWT_TOKEN,
-    { expiresIn: "2h" }
+    { expiresIn: "2d" }
   )
 }
 

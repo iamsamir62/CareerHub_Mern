@@ -9,8 +9,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "./ui/badge";
+import axios from "axios";
+import { APPLICATION_API_END_POINT } from "@/utils/constant";
+import { useSelector } from "react-redux";
+import store from "@/redux/store";
 
 const AppliedJob = () => {
+  const { allAppliedJobs } = useSelector((store) => store.job);
+  const { user } = useSelector((store) => store.auth);
   return (
     <div>
       <Table>
@@ -24,13 +30,23 @@ const AppliedJob = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {[1, 2, 3, 4, 5].map((item, index) => (
-            <TableRow key={index}>
-              <TableCell>15-03.2024</TableCell>
-              <TableCell>Frontend Developer</TableCell>
-              <TableCell>Tuna</TableCell>
+          {allAppliedJobs.map((appliedJob) => (
+            <TableRow key={appliedJob?._id}>
+              <TableCell>{appliedJob.createdAt.split("T")[0]}</TableCell>
+              <TableCell>{appliedJob.job?.title}</TableCell>
+              <TableCell>{appliedJob.job?.company.name}</TableCell>
               <TableCell className="text-right">
-                <Badge>Selected</Badge>
+                <Badge
+                  className={`${
+                    appliedJob?.status === "rejected"
+                      ? "bg-red-400"
+                      : appliedJob.status === "pending"
+                      ? "bg-gray-400"
+                      : "bg-green-400"
+                  }`}
+                >
+                  {appliedJob.status.toUpperCase()}
+                </Badge>
               </TableCell>
             </TableRow>
           ))}
