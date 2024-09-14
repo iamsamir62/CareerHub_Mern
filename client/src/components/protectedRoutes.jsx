@@ -9,7 +9,6 @@ const ProtectedRoutes = ({ children }) => {
     return <Navigate to="/auth" />;
   }
 
-  // Redirect to home if the role is not "recruiter"
   if (user.role !== "recruiter") {
     return <Navigate to="/" />;
   }
