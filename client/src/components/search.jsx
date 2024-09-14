@@ -17,6 +17,7 @@ const search = () => {
   };
   return (
     <div className="flex items-center border border-gray-300 rounded-md">
+      <h1></h1>
       <input
         type="text"
         className="flex-1 rounded-l-md bg-transparent focus:outline-none pl-10 pr-3 py-2 w-full border-none"
