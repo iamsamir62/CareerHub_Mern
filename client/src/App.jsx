@@ -4,7 +4,6 @@ import HomePage from "./pages/HomePage";
 import Job from "./pages/job";
 import Profile from "./components/profile";
 import JobListing from "./pages/jobListing";
-import PostJobs from "./pages/postJobs";
 import { ThemeProvider } from "./components/theme-provider";
 import LoginSignup from "./pages/LoginSignup";
 import Companies from "./components/admin/Companies";
@@ -15,7 +14,7 @@ import PostJob from "./components/admin/PostJob";
 import Applications from "./components/admin/Applications";
 import AppliedJob from "./components/AppliedJob";
 import Browse from "./components/Browse";
-import ProtectedRoutes from "./components/ProtectedRoutes"; // Capitalized the component name
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 const router = createBrowserRouter([
   {
