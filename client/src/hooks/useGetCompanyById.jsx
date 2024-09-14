@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 
 const useGetCompanyById = (companyId) => {
   const dispatch = useDispatch();
-  console.log(companyId);
 
   useEffect(() => {
     const fetchSingleCompany = async () => {
@@ -14,7 +13,7 @@ const useGetCompanyById = (companyId) => {
         const res = await axios.get(`${COMPANY_API_END_POINT}/${companyId}`, {
           withCredentials: true,
         });
-        console.log(res.data.company);
+
         if (res.data.success) {
           dispatch(setSingleCompany(res.data.company));
         }

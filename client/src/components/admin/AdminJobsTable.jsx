@@ -21,7 +21,6 @@ const AdminJobsTable = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("called");
     const filteredJobs = adminjobs.filter((job) => {
       if (!searchJobByText) {
         return true;

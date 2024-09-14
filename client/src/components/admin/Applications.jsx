@@ -16,7 +16,6 @@ const Applicants = () => {
   useEffect(() => {
     const fetchAllApplicants = async () => {
       if (!id) {
-        console.log("missing id");
       }
       try {
         const res = await axios.get(

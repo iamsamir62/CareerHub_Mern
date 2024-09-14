@@ -105,7 +105,6 @@ const getApplicants = asyncHandler(async (req, res) => {
         success: false
       })
     };
-    console.log(job);
 
     return res.status(200).json({
       message: "Job applied successfully",

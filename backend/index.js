@@ -7,11 +7,14 @@ import userRoute from "./routes/user.route.js"
 import companyRoute from "./routes/company.routes.js"
 import jobRoute from "./routes/jobs.route.js"
 import applicationRoute from "./routes/application.route.js"
+import path from "path";
 
 // Load environment variables from .env file
 dotenv.config();
 
 const app = express();
+
+const _dirname = path.resolve();
 
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
@@ -36,6 +39,11 @@ app.use("/api/auth", userRoute)
 app.use("/api/company", companyRoute)
 app.use("/api/jobs", jobRoute)
 app.use("/api/application", applicationRoute)
+
+app.use(express.static(path.join(_dirname, "/client/dist")))
+app.get('*', (_, res) => {
+  res.sendFile(path.resolve(_dirname, "client", "dist", "index.html"));
+})
 
 // Start the server
 app.listen(PORT, () => {

@@ -27,8 +27,6 @@ const FilterCard = () => {
 
   const handleValueChange = (value) => {
     setSelectedValue(value);
-    // Handle the filter change (e.g., filter jobs based on the selected value)
-    console.log("Selected filter value:", value);
   };
 
   const handleClearFilters = () => {

@@ -106,10 +106,8 @@ const LoginSignup = () => {
 
         if (res.data.success) {
           dispatch(setUser(res.data.data));
-          console.log(res.data.data);
 
           toast.success(res.data.message);
-          console.log(res.data.message);
 
           navigate("/"); // Navigate to / after login
         }

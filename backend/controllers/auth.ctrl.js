@@ -41,7 +41,7 @@ const registerUser = async (req, res) => {
         profilePhoto: cloudResponse.secure_url
       }
     });
-    console.log(user?.profile?.profilePhoto);
+
 
 
     if (user) {
@@ -148,7 +148,6 @@ const logoutUser = asyncHandler(async (req, res) => {
 const updateProfile = asyncHandler(async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    console.log(fullname, email, phoneNumber, bio, skills);
 
     const file = req.file;
 
@@ -171,7 +170,6 @@ const updateProfile = asyncHandler(async (req, res) => {
     }
 
     const userId = req.id;
-    console.log("User ID:", userId);
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       {
@@ -207,11 +205,4 @@ const updateProfile = asyncHandler(async (req, res) => {
     });
   }
 });
-
-
-
-
-
-
-
 export { registerUser, loginUser, logoutUser, updateProfile }
