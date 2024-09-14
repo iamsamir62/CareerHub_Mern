@@ -29,6 +29,7 @@ import store from "@/redux/store";
 import Profile from "../components/profile";
 import useGetAllJobs from "@/hooks/useGetAllJobs";
 import { toast } from "sonner";
+import AppliedJob from "@/components/AppliedJob";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const HomePage = () => {
         </p>
       </section>
       {user?.role === "recruiter" ? (
-        <div className="flex gap-6 justify-center">
+        <div className="flex gap-2 sm:gap-6 justify-center">
           <Link to="/admin/jobs/create">
             <Button variant="destructive" size="xl">
               Post a Job

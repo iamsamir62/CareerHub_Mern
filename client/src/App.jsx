@@ -4,19 +4,18 @@ import HomePage from "./pages/HomePage";
 import Job from "./pages/job";
 import Profile from "./components/profile";
 import JobListing from "./pages/jobListing";
-import Onbording from "./pages/onbording";
 import PostJobs from "./pages/postJobs";
 import { ThemeProvider } from "./components/theme-provider";
 import LoginSignup from "./pages/LoginSignup";
 import Companies from "./components/admin/Companies";
 import CreateCompany from "./components/admin/CreateCompany";
 import CompanySetup from "./components/admin/CompanySetup";
-import Jobs from "./components/admin/AdminJobs";
 import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from "./components/admin/PostJob";
 import Applications from "./components/admin/Applications";
 import AppliedJob from "./components/AppliedJob";
 import Browse from "./components/Browse";
+import ProtectedRoutes from "./components/ProtectedRoutes"; // Capitalized the component name
 
 const router = createBrowserRouter([
   {
@@ -31,10 +30,6 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/onboarding",
-        element: <Onbording />,
-      },
-      {
         path: "/jobs",
         element: <JobListing />,
       },
@@ -43,33 +38,8 @@ const router = createBrowserRouter([
         element: <Job />,
       },
       {
-        path: "/post-jobs",
-        element: <PostJobs />,
-      },
-
-      {
         path: "/auth",
         element: <LoginSignup />,
-      },
-      {
-        path: "/admin",
-        element: <Companies />,
-      },
-      {
-        path: "/admin/companies/create",
-        element: <CreateCompany />,
-      },
-      {
-        path: "/admin/companies/:id",
-        element: <CompanySetup />,
-      },
-      {
-        path: "/admin/jobs",
-        element: <AdminJobs />,
-      },
-      {
-        path: "/admin/jobs/create",
-        element: <PostJob />,
       },
       {
         path: "/browse",
@@ -79,9 +49,54 @@ const router = createBrowserRouter([
         path: "/appliedjobs",
         element: <AppliedJob />,
       },
+      // Recruiter-only routes wrapped inside ProtectedRoutes
+      {
+        path: "/admin",
+        element: (
+          <ProtectedRoutes>
+            <Companies />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/admin/companies/create",
+        element: (
+          <ProtectedRoutes>
+            <CreateCompany />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/admin/companies/:id",
+        element: (
+          <ProtectedRoutes>
+            <CompanySetup />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/admin/jobs",
+        element: (
+          <ProtectedRoutes>
+            <AdminJobs />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/admin/jobs/create",
+        element: (
+          <ProtectedRoutes>
+            <PostJob />
+          </ProtectedRoutes>
+        ),
+      },
       {
         path: "/admin/jobs/:id/applicants",
-        element: <Applications />,
+        element: (
+          <ProtectedRoutes>
+            <Applications />
+          </ProtectedRoutes>
+        ),
       },
     ],
   },

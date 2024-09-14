@@ -13,8 +13,11 @@ import axios from "axios";
 import { APPLICATION_API_END_POINT } from "@/utils/constant";
 import { useSelector } from "react-redux";
 import store from "@/redux/store";
+import useGetAppliedJobs from "@/hooks/useGetAppliedJobs";
 
 const AppliedJob = () => {
+  useGetAppliedJobs();
+
   const { allAppliedJobs } = useSelector((store) => store.job);
   const { user } = useSelector((store) => store.auth);
   return (

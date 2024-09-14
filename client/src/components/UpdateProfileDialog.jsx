@@ -141,35 +141,42 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   className="col-span-3  rounded-lg outline-none py-2 px-2 text-black"
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label
-                  htmlFor="skills"
-                  className="text-right font-bold text-xl"
-                >
-                  Skills
-                </Label>
-                <input
-                  type="text"
-                  name="skills"
-                  id="skills"
-                  value={input.skills}
-                  onChange={changeEventHandler}
-                  className="col-span-3  rounded-lg outline-none py-2 px-2 text-black"
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="file" className="text-right font-bold text-xl">
-                  Resume
-                </Label>
-                <input
-                  type="file"
-                  name="file"
-                  id="file"
-                  accept="application/pdf"
-                  onChange={fileChangeHandler}
-                  className="col-span-3  rounded-lg outline-none py-2 px-2 text-white"
-                />
-              </div>
+              {user?.role === "candidate" && (
+                <div>
+                  <div className="grid grid-cols-4 items-center gap-4 mb-4">
+                    <Label
+                      htmlFor="skills"
+                      className="text-right font-bold text-xl"
+                    >
+                      Skills
+                    </Label>
+                    <input
+                      type="text"
+                      name="skills"
+                      id="skills"
+                      value={input.skills}
+                      onChange={changeEventHandler}
+                      className="col-span-3 rounded-lg outline-none py-2 px-2 text-black"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label
+                      htmlFor="file"
+                      className="text-right font-bold text-xl"
+                    >
+                      Resume
+                    </Label>
+                    <input
+                      type="file"
+                      name="file"
+                      id="file"
+                      accept="application/pdf"
+                      onChange={fileChangeHandler}
+                      className="col-span-3 rounded-lg outline-none py-2 px-2 text-white"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
             <DialogFooter>
               <button

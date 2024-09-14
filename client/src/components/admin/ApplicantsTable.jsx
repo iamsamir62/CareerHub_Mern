@@ -57,7 +57,7 @@ const ApplicantsTable = () => {
               <tr key={item._id}>
                 <TableCell>{item?.applicant?.fullname}</TableCell>
                 <TableCell>{item?.applicant?.email}</TableCell>
-                <TableCell>{item?.applicant?.phoneNumber}</TableCell>
+                <TableCell>{item?.applicant?.contact}</TableCell>
                 <TableCell>
                   {item.applicant?.profile?.resume ? (
                     <a
