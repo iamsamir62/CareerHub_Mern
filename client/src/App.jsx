@@ -15,6 +15,7 @@ import Applications from "./components/admin/Applications";
 import AppliedJob from "./components/AppliedJob";
 import Browse from "./components/Browse";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+ProtectedRoutes;
 
 const router = createBrowserRouter([
   {
