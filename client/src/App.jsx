@@ -14,8 +14,7 @@ import PostJob from "./components/admin/PostJob";
 import Applications from "./components/admin/Applications";
 import AppliedJob from "./components/AppliedJob";
 import Browse from "./components/Browse";
-import ProtectedRoutes from "./components/ProtectedRoutes";
-ProtectedRoutes;
+import PrivateRoutes from "./components/PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -49,53 +48,53 @@ const router = createBrowserRouter([
         path: "/appliedjobs",
         element: <AppliedJob />,
       },
-      // Recruiter-only routes wrapped inside ProtectedRoutes
+      // Recruiter-only routes wrapped inside PrivateRoutes
       {
         path: "/admin",
         element: (
-          <ProtectedRoutes>
+          <PrivateRoutes>
             <Companies />
-          </ProtectedRoutes>
+          </PrivateRoutes>
         ),
       },
       {
         path: "/admin/companies/create",
         element: (
-          <ProtectedRoutes>
+          <PrivateRoutes>
             <CreateCompany />
-          </ProtectedRoutes>
+          </PrivateRoutes>
         ),
       },
       {
         path: "/admin/companies/:id",
         element: (
-          <ProtectedRoutes>
+          <PrivateRoutes>
             <CompanySetup />
-          </ProtectedRoutes>
+          </PrivateRoutes>
         ),
       },
       {
         path: "/admin/jobs",
         element: (
-          <ProtectedRoutes>
+          <PrivateRoutes>
             <AdminJobs />
-          </ProtectedRoutes>
+          </PrivateRoutes>
         ),
       },
       {
         path: "/admin/jobs/create",
         element: (
-          <ProtectedRoutes>
+          <PrivateRoutes>
             <PostJob />
-          </ProtectedRoutes>
+          </PrivateRoutes>
         ),
       },
       {
         path: "/admin/jobs/:id/applicants",
         element: (
-          <ProtectedRoutes>
+          <PrivateRoutes>
             <Applications />
-          </ProtectedRoutes>
+          </PrivateRoutes>
         ),
       },
     ],

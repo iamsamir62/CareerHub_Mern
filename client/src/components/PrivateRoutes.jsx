@@ -1,0 +1,19 @@
+import React from "react";
+import { useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
+const PrivateRoutes = ({ children }) => {
+  const { user } = useSelector((store) => store.auth);
+
+  // Redirect to login if not authenticated
+  if (!user) {
+    return <Navigate to="/auth" />;
+  }
+
+  if (user.role !== "recruiter") {
+    return <Navigate to="/" />;
+  }
+
+  return children;
+};
+
+export default PrivateRoutes;
